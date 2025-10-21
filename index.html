@@ -17,6 +17,54 @@
             min-height: 100vh;
             padding: 20px;
             line-height: 1.6;
+            transition: background 0.3s ease;
+        }
+
+        /* Темная тема - автоматическое переключение */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #1c161c;
+            }
+
+            .card {
+                background: #2b272b !important;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+            }
+
+            h1 {
+                color: rgb(225, 225, 225) !important;
+            }
+
+            .subtitle {
+                color: rgba(255, 255, 255, 0.55) !important;
+            }
+
+            .info-row {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+            }
+
+            .info-label {
+                color: rgba(255, 255, 255, 0.55) !important;
+            }
+
+            .info-value {
+                color: rgb(225, 225, 225) !important;
+            }
+
+            .link-display {
+                background: rgba(44, 44, 44, 0.8) !important;
+                color: rgba(255, 255, 255, 0.7) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            }
+
+            .footer {
+                color: rgba(255, 255, 255, 0.4) !important;
+            }
+
+            .status-badge {
+                background: rgba(26, 173, 58, 0.2) !important;
+                color: #75b798 !important;
+            }
         }
 
         .container {
@@ -31,6 +79,7 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             padding: 40px 30px;
             margin-bottom: 20px;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
 
         .header {
@@ -43,11 +92,13 @@
             font-weight: 600;
             color: #1a1a1a;
             margin-bottom: 8px;
+            transition: color 0.3s ease;
         }
 
         .subtitle {
             font-size: 15px;
             color: #666666;
+            transition: color 0.3s ease;
         }
 
         .icon-wrapper {
@@ -96,6 +147,7 @@
             justify-content: space-between;
             padding: 16px 0;
             border-bottom: 1px solid #f0f0f0;
+            transition: border-color 0.3s ease;
         }
 
         .info-row:last-child {
@@ -108,6 +160,7 @@
             gap: 10px;
             font-size: 14px;
             color: #666666;
+            transition: color 0.3s ease;
         }
 
         .info-label-icon {
@@ -122,6 +175,7 @@
             font-size: 15px;
             font-weight: 600;
             color: #1a1a1a;
+            transition: color 0.3s ease;
         }
 
         .timer {
@@ -141,6 +195,7 @@
             font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
             line-height: 1.6;
             border: 1px solid #E8E9ED;
+            transition: all 0.3s ease;
         }
 
         .status-badge {
@@ -150,6 +205,7 @@
             border-radius: 8px;
             font-size: 13px;
             font-weight: 600;
+            transition: all 0.3s ease;
         }
 
         .center {
@@ -162,6 +218,7 @@
             padding: 20px;
             color: #999999;
             font-size: 13px;
+            transition: color 0.3s ease;
         }
     </style>
     <script>
