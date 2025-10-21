@@ -3,106 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirect Page</title>
+    <title>Simple redirect</title>
     <style>
-        /* Импорт шрифта */
-        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;600&display=swap');
-
-        /* Основные стили для тела */
-        body {
-            font-family: 'Ubuntu', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            overflow: hidden;
-            transition: background-color 0.3s, color 0.3s;
+            box-sizing: border-box;
         }
 
-        /* Светлая тема */
-        body.light {
-            background-color: #F5F5F5;
-            color: #333;
-        }
-
-        /* Темная тема */
-        body.dark {
-            background-color: #2a2a3d;
-            color: #ddd;
-        }
-
-        /* Фон с текстурой */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('https://i.ibb.co/HqRwCSL/Pattern-Copy-1.png');
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-            opacity: 0.2;
-            pointer-events: none;
-            z-index: 1;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #E8D5F2 0%, #F0E5F5 50%, #E8D5F2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            max-width: 400px;
-            width: 90%;
-            position: relative;
-            z-index: 2;
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 0;
         }
 
-        h1 {
-            font-size: 24px;
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 40px 30px;
             margin-bottom: 20px;
         }
 
-        p {
-            font-size: 14px;
-            margin-top: 20px;
-            color: #888;
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        a.button {
-            display: inline-block;
-            padding: 15px 30px;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 50px;
-            text-decoration: none;
+        h1 {
+            font-size: 26px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #666666;
+        }
+
+        .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FF6B9D 0%, #FE5196 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        .icon-wrapper svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        .redirect-link {
+            display: block;
+            width: 100%;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #FF6B9D 0%, #FE5196 100%);
             color: #ffffff;
-            background: linear-gradient(45deg, #ff416c, #ff4b2b, #1e90ff, #00c6ff, #0072ff);
-            background-size: 400% 400%;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: gradientAnimation 5s ease-in-out infinite;
+            text-decoration: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+            border: none;
         }
 
-        a.button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        .redirect-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
         }
 
-        @keyframes gradientAnimation {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+        .info-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .info-label-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .info-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .timer {
+            color: #FF6B9D;
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        .link-display {
+            word-break: break-all;
+            background: #F8F9FB;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            color: #666666;
+            margin-top: 20px;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            line-height: 1.6;
+            border: 1px solid #E8E9ED;
+        }
+
+        .status-badge {
+            background: #E8F5E9;
+            color: #2E7D32;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            color: #999999;
+            font-size: 13px;
         }
     </style>
     <script>
@@ -112,29 +171,41 @@
             const language = navigator.language || navigator.userLanguage;
             const isRussian = language.startsWith('ru');
 
-            const titleText = isRussian ? 'Продолжить' : 'Continue';
-            const buttonText = isRussian ? 'Нажмите сюда, чтобы продолжить' : 'Click here to proceed';
-            const instructionsText = isRussian 
-                ? 'Чтобы перейти далее, нажмите на кнопку выше.'
-                : 'To continue, please click the button above.';
+            const titleText = isRussian ? 'Перенаправление' : 'Redirect Page';
+            const subtitleText = isRussian ? 'Пожалуйста, подождите...' : 'Please wait while we redirect you';
+            const buttonText = isRussian ? 'Перейти сейчас' : 'Continue Now';
+            const statusLabel = isRussian ? 'Статус' : 'Status';
+            const statusValue = isRussian ? 'Перенаправление' : 'Redirecting';
+            const timerLabel = isRussian ? 'Время до перехода' : 'Time remaining';
+            const destinationLabel = isRussian ? 'Адрес назначения' : 'Destination URL';
 
-            //document.getElementById('title').innerText = titleText;
+            document.getElementById('title').innerText = titleText;
+            document.getElementById('subtitle').innerText = subtitleText;
             document.getElementById('redirectLink').innerText = buttonText;
             document.getElementById('redirectLink').href = redirectTo;
-            document.getElementById('instructions').innerText = instructionsText;
-
-            // Определяем тему
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.body.classList.add('dark');
-            } else {
-                document.body.classList.add('light');
-            }
+            document.getElementById('status-label').innerText = statusLabel;
+            document.getElementById('status-value').innerText = statusValue;
+            document.getElementById('timer-label').innerText = timerLabel;
+            document.getElementById('destination-label').innerText = destinationLabel;
+            document.getElementById('destination-url').innerText = redirectTo || (isRussian ? 'Не указан' : 'Not specified');
 
             if (redirectTo) {
-                setTimeout(() => {
-                    window.location.href = redirectTo;
-                }, 5000); // Автоматическое перенаправление через 5 секунд
+                let countdown = 7;
+                const timerElement = document.getElementById('timer');
+                
+                timerElement.innerText = countdown;
+
+                const interval = setInterval(() => {
+                    countdown--;
+                    timerElement.innerText = countdown;
+                    
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        window.location.href = redirectTo;
+                    }
+                }, 1000);
             } else {
+                document.getElementById('timer').innerText = '—';
                 alert(isRussian ? 'Не указана ссылка для перенаправления.' : 'No redirect link specified.');
             }
         });
@@ -142,9 +213,66 @@
 </head>
 <body>
     <div class="container">
-        <!-- <h1 id="title">Continue</h1> -->
-        <a id="redirectLink" class="button" href="#" target="_blank">Click here to proceed</a>
-        <p id="instructions">To continue, please click the button above.</p>
+        <div class="card">
+            <div class="header">
+                <div class="icon-wrapper">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 3L4 14h7v7l9-11h-7V3z"/>
+                    </svg>
+                </div>
+                <h1 id="title">Redirect Page</h1>
+                <div class="subtitle" id="subtitle">Please wait while we redirect you</div>
+            </div>
+
+            <a id="redirectLink" class="redirect-link" href="#" target="_blank">Continue Now</a>
+
+            <div class="info-row">
+                <div class="info-label">
+                    <div class="info-label-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="#4CAF50" stroke-width="2"/>
+                            <path d="M8 12l2 2 4-4" stroke="#4CAF50" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <span id="status-label">Status</span>
+                </div>
+                <div class="info-value">
+                    <span class="status-badge" id="status-value">Redirecting</span>
+                </div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">
+                    <div class="info-label-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="#FF6B9D" stroke-width="2"/>
+                            <path d="M12 7v5l3 3" stroke="#FF6B9D" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <span id="timer-label">Time remaining</span>
+                </div>
+                <div class="info-value">
+                    <span id="timer" class="timer">5</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <div class="info-label" style="margin-bottom: 12px;">
+                    <div class="info-label-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="#666" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="#666" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <span id="destination-label">Destination URL</span>
+                </div>
+                <div id="destination-url" class="link-display"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Fast and simple redirect service
+        </div>
     </div>
 </body>
 </html>
