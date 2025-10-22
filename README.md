@@ -42,6 +42,7 @@ https://sawgod.github.io/redirect-page/?theme=THEME_NAME&redirect_to=YOUR_URL
 - `pixel` - Пиксельная игровая тема в стиле 8-bit
 - `smart` - Современная тема с синим дизайном и анимациями
 - `neon` - Неоновая тема с изящным градиентом
+- `aurora` - Северное сияние с мягкими анимациями
 - `soft` - Мягкая розово-фиолетовая тема с карточками
 - `simple` - Простая монохромная тема
 - `minimal` - Минималистичная тема
@@ -129,6 +130,14 @@ https://sawgod.github.io/redirect-page/?theme=smart&redirect_to=YOUR_URL
   Светлая тема             |  Темная тема
 :-------------------------:|:-------------------------:
 ![](img/preview_light.png)  |  ![](img/preview_dark.png)
+</details>
+
+<details>
+  <summary>Aurora</summary>
+  
+  Светлая тема             |  Темная тема
+:-------------------------:|:-------------------------:
+![](img/aurora_light.png)  |  ![](img/aurora_dark.png)
 </details>
 
 <details>

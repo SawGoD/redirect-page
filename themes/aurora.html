@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect - Aurora Theme</title>
+    <style>
+        /**
+         * AURORA THEME
+         * 
+         * Northern gradient theme with glass panels and soft glows
+         * Inspired by Linear, Arc Browser, and Raycast design patterns
+         */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* =========================
+           LIGHT THEME (DEFAULT)
+           ========================= */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: 
+                radial-gradient(120% 100% at 20% 0%, #dff0ff 0%, #f6e6ff 45%, #ffffff 100%),
+                radial-gradient(80% 60% at 80% 100%, rgba(255, 182, 193, 0.3), transparent),
+                radial-gradient(60% 40% at 0% 50%, rgba(173, 216, 230, 0.2), transparent);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2d3748;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.2), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.3), transparent);
+            background-repeat: repeat;
+            background-size: 150px 100px;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(14px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(50, 80, 120, 0.15);
+            position: relative;
+            z-index: 1;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #4a5568, #2d3748);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: left;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 32px;
+            text-align: left;
+            font-weight: 400;
+        }
+
+        .timer-section {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .timer {
+            font-size: 64px;
+            font-weight: 700;
+            color: #2d3748;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 4px 12px rgba(50, 80, 120, 0.2);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .timer-label {
+            font-size: 12px;
+            color: #718096;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(50, 80, 120, 0.08);
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .status-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(50, 80, 120, 0.12);
+        }
+
+        .status-section:hover::before {
+            opacity: 1;
+        }
+
+        .status-label {
+            font-size: 14px;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .status-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .redirect-link {
+            display: block;
+            padding: 18px 36px;
+            background: linear-gradient(135deg, #ff5c96, #ff8a80);
+            color: white;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(255, 92, 150, 0.35);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .redirect-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .redirect-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(255, 92, 150, 0.5);
+        }
+
+        .redirect-link:hover::before {
+            left: 100%;
+        }
+
+        .url-section {
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 16px rgba(50, 80, 120, 0.08);
+        }
+
+        .url-label {
+            font-size: 12px;
+            color: #718096;
+            font-weight: 500;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .url-display {
+            word-break: break-all;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 11px;
+            color: #4a5568;
+            line-height: 1.4;
+        }
+
+
+        /* =========================
+           DARK THEME
+           ========================= */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: 
+                    radial-gradient(120% 100% at 20% 0%, #1a202c 0%, #2d3748 45%, #4a5568 100%),
+                    radial-gradient(80% 60% at 80% 100%, rgba(255, 182, 193, 0.1), transparent),
+                    radial-gradient(60% 40% at 0% 50%, rgba(173, 216, 230, 0.08), transparent);
+                color: #e2e8f0;
+            }
+
+            body::before {
+                background: 
+                    radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.1), transparent),
+                    radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.08), transparent),
+                    radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.12), transparent),
+                    radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.1), transparent);
+            }
+
+            .container {
+                background: rgba(20, 22, 30, 0.55);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+
+            .title {
+                background: linear-gradient(135deg, #e2e8f0, #cbd5e0);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .subtitle {
+                color: #a0aec0;
+            }
+
+            .status-section {
+                background: rgba(20, 22, 30, 0.4);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            .status-section:hover {
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            }
+
+            .status-label {
+                color: #a0aec0;
+            }
+
+            .status-value {
+                color: #e2e8f0;
+            }
+
+            .url-section {
+                background: rgba(20, 22, 30, 0.3);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            .url-label {
+                color: #a0aec0;
+            }
+
+            .url-display {
+                color: #a0aec0;
+            }
+
+            .timer {
+                color: #e2e8f0;
+                text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            }
+
+            .redirect-link {
+                background: linear-gradient(135deg, #ff5c96, #ff8a80);
+                box-shadow: 0 8px 24px rgba(255, 92, 150, 0.4);
+            }
+
+            .redirect-link:hover {
+                box-shadow: 0 12px 32px rgba(255, 92, 150, 0.6);
+            }
+
+        }
+
+        /* =========================
+           RESPONSIVE DESIGN
+           ========================= */
+        @media (max-width: 768px) {
+            .container {
+                padding: 32px 24px;
+                margin: 16px;
+            }
+
+            .title {
+                font-size: 24px;
+            }
+
+            .timer {
+                font-size: 48px;
+            }
+
+            .redirect-link {
+                padding: 16px 32px;
+                font-size: 14px;
+            }
+
+            .status-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 16px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+            }
+
+            .container {
+                padding: 24px 20px;
+            }
+
+            .title {
+                font-size: 22px;
+            }
+
+            .timer {
+                font-size: 40px;
+            }
+
+            .redirect-link {
+                padding: 14px 28px;
+                font-size: 13px;
+            }
+        }
+
+        /* =========================
+           ANIMATIONS
+           ========================= */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+        }
+
+        .container {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .status-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { 
+                box-shadow: 0 8px 24px rgba(255, 92, 150, 0.35);
+            }
+            50% { 
+                box-shadow: 0 8px 32px rgba(255, 92, 150, 0.5);
+            }
+        }
+
+        .redirect-link {
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .redirect-link {
+                animation: pulse-glow-dark 4s ease-in-out infinite;
+            }
+        }
+
+        @keyframes pulse-glow-dark {
+            0%, 100% { 
+                box-shadow: 0 8px 24px rgba(255, 92, 150, 0.4);
+            }
+            50% { 
+                box-shadow: 0 8px 32px rgba(255, 92, 150, 0.6);
+            }
+        }
+    </style>
+    <script>
+        /**
+         * REDIRECT LOGIC
+         *
+         * DO NOT MODIFY unless you know what you're doing.
+         * This script handles:
+         * - URL parameter extraction (redirect_to)
+         * - Language detection (Russian/English)
+         * - Countdown timer (7 seconds)
+         * - Automatic redirect
+         */
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentURL = window.location.href;
+            let redirectTo = decodeURIComponent(currentURL.split('redirect_to=')[1] || '');
+            const language = navigator.language || navigator.userLanguage;
+            const isRussian = language.startsWith('ru');
+
+            // Bilingual text strings
+            const titleText = isRussian ? 'Перенаправление' : 'Redirect Page';
+            const subtitleText = isRussian ? 'Пожалуйста, подождите' : 'Please wait';
+            const buttonText = isRussian ? 'Перейти' : 'Continue';
+            const statusLabel = isRussian ? 'Статус' : 'Status';
+            const statusValue = isRussian ? 'Перенаправление' : 'Redirecting';
+            const timerLabel = isRussian ? 'Осталось' : 'Time remaining';
+            const urlLabel = isRussian ? 'URL назначения' : 'Destination URL';
+
+            // Update UI with localized text
+            document.getElementById('title').innerText = titleText;
+            document.getElementById('subtitle').innerText = subtitleText;
+            document.getElementById('redirectLink').innerText = buttonText;
+            document.getElementById('redirectLink').href = redirectTo;
+            document.getElementById('status-label').innerText = statusLabel;
+            document.getElementById('status-value').innerText = statusValue;
+            document.getElementById('timer-label').innerText = timerLabel;
+            document.getElementById('url-label').innerText = urlLabel;
+            document.getElementById('url-display').innerText = redirectTo || (isRussian ? 'Не указан' : 'Not specified');
+
+            // Countdown timer logic
+            if (redirectTo) {
+                let countdown = 7;
+                const timerElement = document.getElementById('timer');
+
+                timerElement.innerText = countdown;
+
+                const interval = setInterval(() => {
+                    countdown--;
+                    timerElement.innerText = countdown;
+
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        window.location.href = redirectTo;
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('timer').innerText = '—';
+                alert(isRussian ? 'Не указана ссылка для перенаправления.' : 'No redirect link specified.');
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title" class="title">Redirect Page</h1>
+        <div id="subtitle" class="subtitle">Please wait</div>
+
+        <div class="timer-section">
+            <span id="timer" class="timer">7</span>
+            <div id="timer-label" class="timer-label">Time remaining</div>
+        </div>
+
+        <div class="status-section">
+            <span id="status-label" class="status-label">Status</span>
+            <span id="status-value" class="status-value">Redirecting</span>
+        </div>
+
+        <a id="redirectLink" class="redirect-link" href="#" target="_blank">Continue</a>
+
+        <div class="url-section">
+            <div id="url-label" class="url-label">Destination URL</div>
+            <div id="url-display" class="url-display"></div>
+        </div>
+    </div>
+</body>
+</html>
