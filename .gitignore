@@ -1,2 +1,4 @@
 .vscode
 .playwright*
+!README.md
+*.md
