@@ -44,6 +44,7 @@ https://sawgod.github.io/redirect-page/?theme=THEME_NAME&redirect_to=YOUR_URL
 - `neon` - Неоновая тема с изящным градиентом
 - `aurora` - Северное сияние с мягкими анимациями
 - `soft` - Мягкая розово-фиолетовая тема с карточками
+- `mono` - 
 - `simple` - Простая монохромная тема
 - `minimal` - Минималистичная тема
 - `apple` - Стиль Apple
@@ -138,6 +139,14 @@ https://sawgod.github.io/redirect-page/?theme=smart&redirect_to=YOUR_URL
   Светлая тема             |  Темная тема
 :-------------------------:|:-------------------------:
 ![](img/aurora_light.png)  |  ![](img/aurora_dark.png)
+</details>
+
+<details>
+  <summary>Mono</summary>
+  
+  Светлая тема             |  Темная тема
+:-------------------------:|:-------------------------:
+![](img/mono_light.png)  |  ![](img/mono_dark.png)
 </details>
 
 <details>
