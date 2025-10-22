@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', monospace, sans-serif;
+            background: #e8eef5;
+            color: #2d3e8f;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Animated grid background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(0deg, transparent 24%, rgba(45, 62, 143, 0.08) 25%, rgba(45, 62, 143, 0.08) 26%, transparent 27%, transparent 74%, rgba(45, 62, 143, 0.08) 75%, rgba(45, 62, 143, 0.08) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(45, 62, 143, 0.08) 25%, rgba(45, 62, 143, 0.08) 26%, transparent 27%, transparent 74%, rgba(45, 62, 143, 0.08) 75%, rgba(45, 62, 143, 0.08) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Scan lines effect */
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.03),
+                rgba(0, 0, 0, 0.03) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 10;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 80px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #2d3e8f;
+            text-shadow:
+                2px 2px 0 rgba(147, 51, 234, 0.3),
+                4px 4px 0 rgba(147, 51, 234, 0.2),
+                6px 6px 0 rgba(147, 51, 234, 0.1);
+            animation: title-float 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes title-float {
+            from {
+                text-shadow:
+                    2px 2px 0 rgba(147, 51, 234, 0.3),
+                    4px 4px 0 rgba(147, 51, 234, 0.2),
+                    6px 6px 0 rgba(147, 51, 234, 0.1);
+            }
+            to {
+                text-shadow:
+                    3px 3px 0 rgba(147, 51, 234, 0.3),
+                    6px 6px 0 rgba(147, 51, 234, 0.2),
+                    9px 9px 0 rgba(147, 51, 234, 0.1);
+            }
+        }
+
+        .timer {
+            font-size: 140px;
+            font-weight: 900;
+            margin-bottom: 80px;
+            text-align: center;
+            line-height: 1;
+            color: #c026d3;
+            text-shadow:
+                3px 3px 0 rgba(45, 62, 143, 0.4),
+                6px 6px 0 rgba(45, 62, 143, 0.3),
+                9px 9px 0 rgba(45, 62, 143, 0.2),
+                12px 12px 0 rgba(45, 62, 143, 0.1);
+            animation: timer-float 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes timer-float {
+            from {
+                text-shadow:
+                    3px 3px 0 rgba(45, 62, 143, 0.4),
+                    6px 6px 0 rgba(45, 62, 143, 0.3),
+                    9px 9px 0 rgba(45, 62, 143, 0.2),
+                    12px 12px 0 rgba(45, 62, 143, 0.1);
+            }
+            to {
+                text-shadow:
+                    4px 4px 0 rgba(45, 62, 143, 0.4),
+                    8px 8px 0 rgba(45, 62, 143, 0.3),
+                    12px 12px 0 rgba(45, 62, 143, 0.2),
+                    16px 16px 0 rgba(45, 62, 143, 0.1);
+            }
+        }
+
+        .redirect-link {
+            display: inline-block;
+            padding: 16px 48px;
+            background: transparent;
+            color: #2d3e8f;
+            text-decoration: none;
+            border: 2px solid #2d3e8f;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                4px 4px 0 rgba(45, 62, 143, 0.3),
+                8px 8px 0 rgba(45, 62, 143, 0.15);
+        }
+
+        .redirect-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(147, 51, 234, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .redirect-link:hover {
+            background: rgba(147, 51, 234, 0.1);
+            box-shadow:
+                6px 6px 0 rgba(45, 62, 143, 0.3),
+                12px 12px 0 rgba(45, 62, 143, 0.15);
+            transform: translate(-2px, -2px);
+        }
+
+        .redirect-link:hover::before {
+            left: 100%;
+        }
+
+        #url-display {
+            font-size: 10px;
+            color: #2d3e8f;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+            padding: 8px 12px;
+            border: 1px solid #2d3e8f;
+            background: rgba(147, 51, 234, 0.05);
+            border-radius: 2px;
+            max-width: 500px;
+            margin: 20px auto 0;
+            box-shadow:
+                2px 2px 0 rgba(45, 62, 143, 0.2),
+                4px 4px 0 rgba(45, 62, 143, 0.1);
+        }
+
+        /* Dark theme */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #0a0a0f;
+                color: #00fff2;
+            }
+
+            body::before {
+                background-image:
+                    linear-gradient(0deg, transparent 24%, rgba(0, 255, 242, 0.05) 25%, rgba(0, 255, 242, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 242, 0.05) 75%, rgba(0, 255, 242, 0.05) 76%, transparent 77%, transparent),
+                    linear-gradient(90deg, transparent 24%, rgba(0, 255, 242, 0.05) 25%, rgba(0, 255, 242, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 242, 0.05) 75%, rgba(0, 255, 242, 0.05) 76%, transparent 77%, transparent);
+            }
+
+            body::after {
+                background: repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15),
+                    rgba(0, 0, 0, 0.15) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            }
+
+            .title {
+                color: #00fff2;
+                text-shadow:
+                    0 0 10px #00fff2,
+                    0 0 20px #00fff2,
+                    0 0 40px #00fff2,
+                    0 0 80px #00a8cc;
+                animation: glow-pulse 2s ease-in-out infinite alternate;
+            }
+
+            @keyframes glow-pulse {
+                from {
+                    text-shadow:
+                        0 0 10px #00fff2,
+                        0 0 20px #00fff2,
+                        0 0 40px #00fff2,
+                        0 0 80px #00a8cc;
+                }
+                to {
+                    text-shadow:
+                        0 0 20px #00fff2,
+                        0 0 30px #00fff2,
+                        0 0 60px #00fff2,
+                        0 0 100px #00a8cc;
+                }
+            }
+
+            .timer {
+                color: #ff00ff;
+                text-shadow:
+                    0 0 10px #ff00ff,
+                    0 0 20px #ff00ff,
+                    0 0 40px #ff00ff,
+                    0 0 80px #b026ff;
+                animation: timer-glow 1.5s ease-in-out infinite alternate;
+            }
+
+            @keyframes timer-glow {
+                from {
+                    text-shadow:
+                        0 0 10px #ff00ff,
+                        0 0 20px #ff00ff,
+                        0 0 40px #ff00ff,
+                        0 0 80px #b026ff;
+                }
+                to {
+                    text-shadow:
+                        0 0 15px #ff00ff,
+                        0 0 30px #ff00ff,
+                        0 0 60px #ff00ff,
+                        0 0 100px #b026ff;
+                }
+            }
+
+            .redirect-link {
+                color: #00fff2;
+                border: 2px solid #00fff2;
+                box-shadow:
+                    0 0 10px #00fff2,
+                    0 0 20px #00fff2,
+                    inset 0 0 10px rgba(0, 255, 242, 0.1);
+            }
+
+            .redirect-link::before {
+                background: linear-gradient(90deg, transparent, rgba(0, 255, 242, 0.3), transparent);
+            }
+
+            .redirect-link:hover {
+                background: rgba(0, 255, 242, 0.1);
+                box-shadow:
+                    0 0 20px #00fff2,
+                    0 0 40px #00fff2,
+                    inset 0 0 20px rgba(0, 255, 242, 0.2);
+                transform: translateY(-2px);
+            }
+
+            #url-display {
+                color: #00fff2;
+                border: 1px solid #00fff2;
+                background: rgba(0, 255, 242, 0.05);
+                box-shadow:
+                    0 0 5px rgba(0, 255, 242, 0.3),
+                    inset 0 0 10px rgba(0, 255, 242, 0.05);
+            }
+        }
+
+        /* Hidden elements required for compatibility */
+        #subtitle,
+        #status-label,
+        #status-value,
+        #timer-label,
+        #url-label {
+            display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 18px;
+                letter-spacing: 2px;
+                margin-bottom: 60px;
+            }
+
+            .timer {
+                font-size: 100px;
+                margin-bottom: 60px;
+            }
+
+            .redirect-link {
+                padding: 14px 36px;
+                font-size: 16px;
+                letter-spacing: 2px;
+            }
+
+            #url-display {
+                font-size: 9px;
+                max-width: 100%;
+                margin-top: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 16px;
+                margin-bottom: 40px;
+            }
+
+            .timer {
+                font-size: 80px;
+                margin-bottom: 40px;
+            }
+
+            .redirect-link {
+                padding: 12px 28px;
+                font-size: 14px;
+            }
+
+            #url-display {
+                font-size: 9px;
+                padding: 6px 10px;
+                margin-top: 16px;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentURL = window.location.href;
+            let redirectTo = decodeURIComponent(currentURL.split('redirect_to=')[1] || '');
+            const language = navigator.language || navigator.userLanguage;
+            const isRussian = language.startsWith('ru');
+
+            const titleText = isRussian ? 'Перенаправление' : 'Redirecting';
+            const buttonText = isRussian ? 'Перейти' : 'Continue';
+
+            document.getElementById('title').innerText = titleText;
+            document.getElementById('redirectLink').innerText = buttonText;
+            document.getElementById('redirectLink').href = redirectTo;
+            document.getElementById('url-display').innerText = redirectTo || (isRussian ? 'Не указан' : 'Not specified');
+
+            if (redirectTo) {
+                let countdown = 7;
+                const timerElement = document.getElementById('timer');
+
+                timerElement.innerText = countdown;
+
+                const interval = setInterval(() => {
+                    countdown--;
+                    timerElement.innerText = countdown;
+
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        window.location.href = redirectTo;
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('timer').innerText = '—';
+                alert(isRussian ? 'Не указана ссылка для перенаправления.' : 'No redirect link specified.');
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div id="title" class="title">Redirecting</div>
+        <div id="timer" class="timer">7</div>
+        <a id="redirectLink" class="redirect-link" href="#" target="_blank">Continue</a>
+        <div id="url-display"></div>
+    </div>
+
+    <!-- Hidden compatibility elements -->
+    <div id="subtitle"></div>
+    <span id="status-label"></span>
+    <span id="status-value"></span>
+    <span id="timer-label"></span>
+    <div id="url-label"></div>
+</body>
+</html>

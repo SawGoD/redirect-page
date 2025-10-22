@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect - Theme Template</title>
+    <style>
+        /**
+         * THEME TEMPLATE
+         *
+         * This is a starter template for creating new redirect page themes.
+         *
+         * IMPORTANT REQUIREMENTS:
+         * 1. Keep all HTML element IDs unchanged (they are used by JavaScript)
+         * 2. Maintain the countdown timer functionality
+         * 3. Support both light and dark themes via @media (prefers-color-scheme: dark)
+         * 4. Ensure the redirect_to parameter is properly handled
+         * 5. Support bilingual interface (Russian/English)
+         *
+         * CUSTOMIZATION:
+         * - Change colors, fonts, spacing as needed
+         * - Modify layout structure (grid, flexbox, etc.)
+         * - Add or remove visual elements (icons, animations, etc.)
+         * - Adjust timing if needed (default is 7 seconds)
+         */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* =========================
+           LIGHT THEME (DEFAULT)
+           ========================= */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #ffffff; /* Customize background */
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            /* Add your styling here */
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+            /* Add your styling here */
+        }
+
+        .subtitle {
+            font-size: 14px;
+            /* Add your styling here */
+        }
+
+        .redirect-link {
+            display: block;
+            padding: 12px 24px;
+            text-decoration: none;
+            /* Add your styling here */
+        }
+
+        .info-label {
+            font-size: 14px;
+            /* Add your styling here */
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            /* Add your styling here */
+        }
+
+        .timer {
+            font-size: 32px;
+            font-weight: 700;
+            /* Add your styling here */
+        }
+
+        .url-display {
+            word-break: break-all;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            /* Add your styling here */
+        }
+
+        /* =========================
+           DARK THEME
+           ========================= */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #1a1a1a; /* Customize dark background */
+                color: #e0e0e0;
+            }
+
+            /* Add dark theme overrides here */
+        }
+
+        /* =========================
+           RESPONSIVE DESIGN
+           ========================= */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            /* Add mobile-specific styling here */
+        }
+    </style>
+    <script>
+        /**
+         * REDIRECT LOGIC
+         *
+         * DO NOT MODIFY unless you know what you're doing.
+         * This script handles:
+         * - URL parameter extraction (redirect_to)
+         * - Language detection (Russian/English)
+         * - Countdown timer (7 seconds)
+         * - Automatic redirect
+         */
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentURL = window.location.href;
+            let redirectTo = decodeURIComponent(currentURL.split('redirect_to=')[1] || '');
+            const language = navigator.language || navigator.userLanguage;
+            const isRussian = language.startsWith('ru');
+
+            // Bilingual text strings - customize as needed
+            const titleText = isRussian ? 'Перенаправление' : 'Redirect Page';
+            const subtitleText = isRussian ? 'Пожалуйста, подождите' : 'Please wait';
+            const buttonText = isRussian ? 'Перейти' : 'Continue';
+            const statusLabel = isRussian ? 'Статус' : 'Status';
+            const statusValue = isRussian ? 'Перенаправление' : 'Redirecting';
+            const timerLabel = isRussian ? 'Осталось' : 'Time remaining';
+            const urlLabel = isRussian ? 'URL назначения' : 'Destination URL';
+
+            // Update UI with localized text
+            document.getElementById('title').innerText = titleText;
+            document.getElementById('subtitle').innerText = subtitleText;
+            document.getElementById('redirectLink').innerText = buttonText;
+            document.getElementById('redirectLink').href = redirectTo;
+            document.getElementById('status-label').innerText = statusLabel;
+            document.getElementById('status-value').innerText = statusValue;
+            document.getElementById('timer-label').innerText = timerLabel;
+            document.getElementById('url-label').innerText = urlLabel;
+            document.getElementById('url-display').innerText = redirectTo || (isRussian ? 'Не указан' : 'Not specified');
+
+            // Countdown timer logic
+            if (redirectTo) {
+                let countdown = 7; // Change countdown duration here if needed
+                const timerElement = document.getElementById('timer');
+
+                timerElement.innerText = countdown;
+
+                const interval = setInterval(() => {
+                    countdown--;
+                    timerElement.innerText = countdown;
+
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        window.location.href = redirectTo;
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('timer').innerText = '—';
+                alert(isRussian ? 'Не указана ссылка для перенаправления.' : 'No redirect link specified.');
+            }
+        });
+    </script>
+</head>
+<body>
+    <!--
+        HTML STRUCTURE
+
+        REQUIRED ELEMENTS (keep these IDs):
+        - id="title" - Page title
+        - id="subtitle" - Subtitle text
+        - id="redirectLink" - Manual redirect button
+        - id="status-label" - Status label
+        - id="status-value" - Status value
+        - id="timer-label" - Timer label
+        - id="timer" - Timer countdown value
+        - id="url-label" - URL label
+        - id="url-display" - URL display area
+
+        You can rearrange, wrap in divs, or style these elements as needed,
+        but the IDs must remain for the JavaScript to work properly.
+    -->
+    <div class="container">
+        <h1 id="title" class="title">Redirect Page</h1>
+        <div id="subtitle" class="subtitle">Please wait</div>
+
+        <!-- Status and Timer -->
+        <div>
+            <span id="status-label" class="info-label">Status</span>
+            <span id="status-value" class="info-value">Redirecting</span>
+        </div>
+        <div>
+            <span id="timer-label" class="info-label">Time remaining</span>
+            <span id="timer" class="info-value timer">7</span>
+        </div>
+
+        <!-- Manual redirect button -->
+        <a id="redirectLink" class="redirect-link" href="#" target="_blank">Continue</a>
+
+        <!-- Destination URL display -->
+        <div id="url-label" class="info-label">Destination URL</div>
+        <div id="url-display" class="url-display"></div>
+    </div>
+</body>
+</html>

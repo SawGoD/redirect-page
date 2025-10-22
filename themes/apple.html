@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 100px;
+            letter-spacing: -0.5px;
+            color: #1d1d1f;
+        }
+
+        .timer {
+            font-size: 120px;
+            font-weight: 300;
+            margin-bottom: 100px;
+            line-height: 1;
+            color: #1d1d1f;
+            letter-spacing: -4px;
+        }
+
+        .redirect-link {
+            display: inline-block;
+            padding: 16px 48px;
+            background: #0071e3;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 980px;
+            font-size: 17px;
+            font-weight: 400;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.15);
+        }
+
+        .redirect-link:hover {
+            background: #0077ED;
+            box-shadow: 0 8px 24px rgba(0, 113, 227, 0.25);
+            transform: translateY(-1px);
+        }
+
+        #url-display {
+            font-size: 11px;
+            color: #86868b;
+            font-family: "SF Mono", "Monaco", "Menlo", monospace;
+            word-break: break-all;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 8px;
+            max-width: 500px;
+            margin: 32px auto 0;
+        }
+
+        /* Dark theme */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #000000;
+                color: #f5f5f7;
+            }
+
+            .title {
+                color: #f5f5f7;
+            }
+
+            .timer {
+                color: #f5f5f7;
+            }
+
+            .redirect-link {
+                background: #2997ff;
+                box-shadow: 0 4px 12px rgba(41, 151, 255, 0.2);
+            }
+
+            .redirect-link:hover {
+                background: #3FA1FF;
+                box-shadow: 0 8px 24px rgba(41, 151, 255, 0.3);
+            }
+
+            #url-display {
+                color: #86868b;
+                background: rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        /* Hidden elements required for compatibility */
+        #subtitle,
+        #status-label,
+        #status-value,
+        #timer-label,
+        #url-label {
+            display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 24px;
+                margin-bottom: 80px;
+            }
+
+            .timer {
+                font-size: 96px;
+                margin-bottom: 80px;
+            }
+
+            .redirect-link {
+                padding: 14px 40px;
+                font-size: 16px;
+            }
+
+            #url-display {
+                font-size: 10px;
+                margin-top: 28px;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 32px 16px;
+            }
+
+            .title {
+                font-size: 21px;
+                margin-bottom: 60px;
+            }
+
+            .timer {
+                font-size: 72px;
+                margin-bottom: 60px;
+            }
+
+            .redirect-link {
+                padding: 12px 36px;
+                font-size: 15px;
+            }
+
+            #url-display {
+                font-size: 9px;
+                padding: 10px 12px;
+                margin-top: 24px;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentURL = window.location.href;
+            let redirectTo = decodeURIComponent(currentURL.split('redirect_to=')[1] || '');
+            const language = navigator.language || navigator.userLanguage;
+            const isRussian = language.startsWith('ru');
+
+            const titleText = isRussian ? 'Перенаправление' : 'Redirecting';
+            const buttonText = isRussian ? 'Продолжить' : 'Continue';
+
+            document.getElementById('title').innerText = titleText;
+            document.getElementById('redirectLink').innerText = buttonText;
+            document.getElementById('redirectLink').href = redirectTo;
+            document.getElementById('url-display').innerText = redirectTo || (isRussian ? 'Не указан' : 'Not specified');
+
+            if (redirectTo) {
+                let countdown = 7;
+                const timerElement = document.getElementById('timer');
+
+                timerElement.innerText = countdown;
+
+                const interval = setInterval(() => {
+                    countdown--;
+                    timerElement.innerText = countdown;
+
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        window.location.href = redirectTo;
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('timer').innerText = '—';
+                alert(isRussian ? 'Не указана ссылка для перенаправления.' : 'No redirect link specified.');
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div id="title" class="title">Redirecting</div>
+        <div id="timer" class="timer">7</div>
+        <a id="redirectLink" class="redirect-link" href="#" target="_blank">Continue</a>
+        <div id="url-display"></div>
+    </div>
+
+    <!-- Hidden compatibility elements -->
+    <div id="subtitle"></div>
+    <span id="status-label"></span>
+    <span id="status-value"></span>
+    <span id="timer-label"></span>
+    <div id="url-label"></div>
+</body>
+</html>

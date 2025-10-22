@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: background 0.3s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #1a1a1a;
+                color: #e0e0e0;
+            }
+
+            .container {
+                background: #2a2a2a;
+                border: 1px solid #3a3a3a;
+            }
+
+            .title {
+                color: #ffffff;
+            }
+
+            .subtitle {
+                color: #a0a0a0;
+            }
+
+            .timer-label {
+                color: #888888;
+            }
+
+            .timer {
+                color: #ffffff;
+            }
+
+            .redirect-link {
+                background: #3a3a3a;
+                color: #ffffff;
+                border: 1px solid #4a4a4a;
+            }
+
+            .redirect-link:hover {
+                background: #4a4a4a;
+            }
+
+            .url-display {
+                background: #242424;
+                border: 1px solid #3a3a3a;
+                color: #a0a0a0;
+            }
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #666666;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .timer-group {
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .timer-label {
+            font-size: 13px;
+            color: #666666;
+            margin-bottom: 12px;
+        }
+
+        .timer {
+            font-size: 48px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .redirect-link {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: #1a1a1a;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 24px;
+            transition: background 0.2s ease;
+            border: none;
+        }
+
+        .redirect-link:hover {
+            background: #333333;
+        }
+
+        .url-display {
+            margin-top: 24px;
+            padding: 12px;
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #666666;
+            word-break: break-all;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+        }
+
+        .url-label {
+            font-size: 12px;
+            color: #666666;
+            margin-bottom: 8px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentURL = window.location.href;
+            let redirectTo = decodeURIComponent(currentURL.split('redirect_to=')[1] || '');
+            const language = navigator.language || navigator.userLanguage;
+            const isRussian = language.startsWith('ru');
+
+            const titleText = isRussian ? 'Перенаправление' : 'Redirect';
+            const subtitleText = isRussian ? 'Пожалуйста, подождите' : 'Please wait';
+            const buttonText = isRussian ? 'Перейти' : 'Continue';
+            const timerLabel = isRussian ? 'Осталось' : 'Time left';
+            const urlLabel = isRussian ? 'URL назначения' : 'Destination URL';
+
+            document.getElementById('title').innerText = titleText;
+            document.getElementById('subtitle').innerText = subtitleText;
+            document.getElementById('redirectLink').innerText = buttonText;
+            document.getElementById('redirectLink').href = redirectTo;
+            document.getElementById('timer-label').innerText = timerLabel;
+            document.getElementById('url-label').innerText = urlLabel;
+            document.getElementById('url-display').innerText = redirectTo || (isRussian ? 'Не указан' : 'Not specified');
+
+            if (redirectTo) {
+                let countdown = 7;
+                const timerElement = document.getElementById('timer');
+
+                timerElement.innerText = countdown;
+
+                const interval = setInterval(() => {
+                    countdown--;
+                    timerElement.innerText = countdown;
+
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        window.location.href = redirectTo;
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('timer').innerText = '—';
+                alert(isRussian ? 'Не указана ссылка для перенаправления.' : 'No redirect link specified.');
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title" class="title">Redirect</h1>
+        <div id="subtitle" class="subtitle">Please wait</div>
+
+        <div class="timer-group">
+            <div id="timer-label" class="timer-label">Time left</div>
+            <div id="timer" class="timer">7</div>
+        </div>
+
+        <a id="redirectLink" class="redirect-link" href="#" target="_blank">Continue</a>
+
+        <div class="url-label" id="url-label">Destination URL</div>
+        <div id="url-display" class="url-display"></div>
+    </div>
+</body>
+</html>
