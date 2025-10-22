@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect - Microsoft</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* =========================
+           LIGHT THEME (DEFAULT)
+           ========================= */
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f3f3f3;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(40px);
+            border-radius: 8px;
+            padding: 48px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12);
+        }
+
+        .header {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #605E5C;
+            font-weight: 400;
+        }
+
+        .status-section {
+            background: rgba(0, 120, 212, 0.05);
+            border-left: 3px solid #0078D4;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .status-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            font-size: 13px;
+            color: #605E5C;
+            font-weight: 400;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .timer-section {
+            text-align: center;
+            margin: 32px 0;
+            padding: 24px;
+        }
+
+        .timer {
+            font-size: 64px;
+            font-weight: 600;
+            color: #0078D4;
+            line-height: 1;
+            margin-bottom: 8px;
+            font-variant-numeric: tabular-nums;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(0.98); }
+        }
+
+        .timer-label-text {
+            font-size: 13px;
+            color: #605E5C;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .redirect-link {
+            display: block;
+            width: 100%;
+            padding: 14px 24px;
+            background: #0078D4;
+            color: #ffffff;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            margin: 24px 0;
+        }
+
+        .redirect-link:hover {
+            background: #106EBE;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(0, 120, 212, 0.3);
+        }
+
+        .redirect-link:active {
+            background: #005A9E;
+            transform: translateY(0);
+        }
+
+        .url-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .url-label {
+            font-size: 12px;
+            color: #605E5C;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .url-display {
+            word-break: break-all;
+            font-family: 'Consolas', 'SF Mono', 'Monaco', monospace;
+            font-size: 13px;
+            color: #323130;
+            background: rgba(0, 0, 0, 0.03);
+            padding: 12px 16px;
+            border-radius: 4px;
+            line-height: 1.6;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        /* Microsoft Logo accent */
+        .ms-logo {
+            display: inline-flex;
+            gap: 2px;
+            margin-bottom: 16px;
+        }
+
+        .ms-logo-square {
+            width: 12px;
+            height: 12px;
+        }
+
+        .ms-red { background: #F25022; }
+        .ms-green { background: #7FBA00; }
+        .ms-blue { background: #00A4EF; }
+        .ms-yellow { background: #FFB900; }
+
+        /* =========================
+           DARK THEME
+           ========================= */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #1e1e1e;
+            }
+
+            .container {
+                background: rgba(45, 45, 45, 0.95);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            }
+
+            .container:hover {
+                box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+            }
+
+            .title {
+                color: #ffffff;
+            }
+
+            .subtitle {
+                color: #a19f9d;
+            }
+
+            .status-section {
+                background: rgba(0, 120, 212, 0.15);
+                border-left-color: #4CC2FF;
+            }
+
+            .info-label {
+                color: #a19f9d;
+            }
+
+            .info-value {
+                color: #ffffff;
+            }
+
+            .timer {
+                color: #4CC2FF;
+            }
+
+            .timer-label-text {
+                color: #a19f9d;
+            }
+
+            .redirect-link {
+                background: #0078D4;
+            }
+
+            .redirect-link:hover {
+                background: #1890F1;
+                box-shadow: 0 4px 16px rgba(76, 194, 255, 0.3);
+            }
+
+            .redirect-link:active {
+                background: #106EBE;
+            }
+
+            .url-section {
+                border-top-color: rgba(255, 255, 255, 0.08);
+            }
+
+            .url-label {
+                color: #a19f9d;
+            }
+
+            .url-display {
+                color: #e0e0e0;
+                background: rgba(255, 255, 255, 0.05);
+                border-color: rgba(255, 255, 255, 0.08);
+            }
+        }
+
+        /* =========================
+           RESPONSIVE DESIGN
+           ========================= */
+        @media (max-width: 768px) {
+            .container {
+                padding: 32px 24px;
+            }
+
+            .title {
+                font-size: 24px;
+            }
+
+            .timer {
+                font-size: 48px;
+            }
+
+            .timer-section {
+                margin: 24px 0;
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            .container {
+                padding: 24px 20px;
+            }
+
+            .title {
+                font-size: 22px;
+            }
+
+            .timer {
+                font-size: 40px;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentURL = window.location.href;
+            let redirectTo = decodeURIComponent(currentURL.split('redirect_to=')[1] || '');
+            const language = navigator.language || navigator.userLanguage;
+            const isRussian = language.startsWith('ru');
+
+            // Bilingual text strings
+            const titleText = isRussian ? 'Перенаправление' : 'Redirect Page';
+            const subtitleText = isRussian ? 'Пожалуйста, подождите' : 'Please wait';
+            const buttonText = isRussian ? 'Перейти сейчас' : 'Go Now';
+            const statusLabel = isRussian ? 'Статус' : 'Status';
+            const statusValue = isRussian ? 'Перенаправление' : 'Redirecting';
+            const timerLabel = isRussian ? 'Секунд' : 'Seconds';
+            const urlLabel = isRussian ? 'URL назначения' : 'Destination URL';
+
+            // Update UI with localized text
+            document.getElementById('title').innerText = titleText;
+            document.getElementById('subtitle').innerText = subtitleText;
+            document.getElementById('redirectLink').innerText = buttonText;
+            document.getElementById('redirectLink').href = redirectTo;
+            document.getElementById('status-label').innerText = statusLabel;
+            document.getElementById('status-value').innerText = statusValue;
+            document.getElementById('timer-label').innerText = timerLabel;
+            document.getElementById('url-label').innerText = urlLabel;
+            document.getElementById('url-display').innerText = redirectTo || (isRussian ? 'Не указан' : 'Not specified');
+
+            // Countdown timer logic
+            if (redirectTo) {
+                let countdown = 7;
+                const timerElement = document.getElementById('timer');
+
+                timerElement.innerText = countdown;
+
+                const interval = setInterval(() => {
+                    countdown--;
+                    timerElement.innerText = countdown;
+
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        window.location.href = redirectTo;
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('timer').innerText = '—';
+                alert(isRussian ? 'Не указана ссылка для перенаправления.' : 'No redirect link specified.');
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="ms-logo">
+            <div class="ms-logo-square ms-red"></div>
+            <div class="ms-logo-square ms-green"></div>
+            <div class="ms-logo-square ms-blue"></div>
+            <div class="ms-logo-square ms-yellow"></div>
+        </div>
+
+        <div class="header">
+            <h1 id="title" class="title">Redirect Page</h1>
+            <div id="subtitle" class="subtitle">Please wait</div>
+        </div>
+
+        <div class="status-section">
+            <div class="status-row">
+                <span id="status-label" class="info-label">Status</span>
+                <span id="status-value" class="info-value">Redirecting</span>
+            </div>
+        </div>
+
+        <div class="timer-section">
+            <div id="timer" class="timer">7</div>
+            <div id="timer-label" class="timer-label-text">Seconds</div>
+        </div>
+
+        <a id="redirectLink" class="redirect-link" href="#" target="_blank">Continue</a>
+
+        <div class="url-section">
+            <div id="url-label" class="url-label">Destination URL</div>
+            <div id="url-display" class="url-display"></div>
+        </div>
+    </div>
+</body>
+</html>

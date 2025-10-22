@@ -8,8 +8,55 @@
         // Theme router - redirects to the appropriate theme based on URL parameter
         (function() {
             const urlParams = new URLSearchParams(window.location.search);
-            const theme = urlParams.get('theme') || 'telegram';
             const redirectTo = urlParams.get('redirect_to');
+
+            /**
+             * Detect operating system based on user agent and platform
+             * @returns {string} Theme name based on detected OS
+             */
+            function detectOS() {
+                const userAgent = navigator.userAgent.toLowerCase();
+                const platform = navigator.platform.toLowerCase();
+
+                // Windows detection
+                if (platform.indexOf('win') !== -1 || userAgent.indexOf('windows') !== -1) {
+                    return 'microsoft';
+                }
+
+                // macOS and iOS detection
+                if (platform.indexOf('mac') !== -1 ||
+                    userAgent.indexOf('macintosh') !== -1 ||
+                    userAgent.indexOf('mac os') !== -1) {
+                    return 'apple';
+                }
+                if (/iphone|ipad|ipod/.test(userAgent)) {
+                    return 'apple';
+                }
+
+                // Android detection
+                if (userAgent.indexOf('android') !== -1) {
+                    return 'google';
+                }
+
+                // Default fallback for Linux and other systems
+                return 'telegram';
+            }
+
+            // Determine theme with priority:
+            // 1. Manual theme parameter (highest priority)
+            // 2. System auto-detection (if ?system is present)
+            // 3. Default (telegram)
+            let theme;
+            if (urlParams.has('theme')) {
+                // Manual theme selection has highest priority
+                theme = urlParams.get('theme');
+            } else if (urlParams.has('system')) {
+                // Auto-detect OS and select appropriate theme
+                theme = detectOS();
+            } else {
+                // Default theme
+                theme = 'telegram';
+            }
 
             // Build the theme URL
             let themeURL = `themes/${theme}.html`;
