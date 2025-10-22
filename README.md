@@ -42,6 +42,7 @@ https://sawgod.github.io/redirect-page/?theme=THEME_NAME&redirect_to=YOUR_URL
 - `simple` - Простая монохромная тема
 - `minimal` - Минималистичная тема
 - `retro` - Ретро-стиль с анимациями
+- `pixel` - Пиксельная игровая тема в стиле 8-bit
 - `apple` - Стиль Apple
 - `google` - Стиль Google Material Design
 - `microsoft` - Стиль Microsoft Fluent Design
@@ -66,6 +67,9 @@ https://sawgod.github.io/redirect-page/?theme=soft&redirect_to=YOUR_URL
 
 # Ретро тема
 https://sawgod.github.io/redirect-page/?theme=retro&redirect_to=YOUR_URL
+
+# Пиксельная игровая тема
+https://sawgod.github.io/redirect-page/?theme=pixel&redirect_to=YOUR_URL
 ```
 
 > **Примечание:** Параметр `?theme` имеет приоритет над `?system`. Если указаны оба, будет использована тема из `?theme`.
@@ -93,10 +97,18 @@ https://sawgod.github.io/redirect-page/?theme=retro&redirect_to=YOUR_URL
 
 <details>
   <summary>Ретро</summary>
-  
+
   Светлая тема             |  Темная тема
 :-------------------------:|:-------------------------:
 ![](img/retro_light.png)  |  ![](img/retro_dark.png)
+</details>
+
+<details>
+  <summary>Pixel (8-bit игровая тема)</summary>
+
+  Светлая тема             |  Темная тема
+:-------------------------:|:-------------------------:
+![](img/pixel_light.png)  |  ![](img/pixel_dark.png)
 </details>
 
 <details>
@@ -116,7 +128,7 @@ https://sawgod.github.io/redirect-page/?theme=retro&redirect_to=YOUR_URL
 </details>
 
 <details>
-  <summary>Минимальная</summary>
+  <summary>Минималистичная</summary>
   
   Светлая тема             |  Темная тема
 :-------------------------:|:-------------------------:

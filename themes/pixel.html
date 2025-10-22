@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect - Pixel</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* =========================
+           LIGHT THEME (DEFAULT)
+           ========================= */
+        body {
+            font-family: 'Press Start 2P', 'Courier New', monospace;
+            background: #e0dcc7;
+            background-image:
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: #9bbc0f;
+            border: 8px solid #0f380f;
+            box-shadow:
+                0 0 0 4px #306230,
+                0 0 0 8px #0f380f,
+                8px 8px 0 8px rgba(15, 56, 15, 0.3);
+            padding: 32px;
+            position: relative;
+        }
+
+        /* Scanline effect */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(15, 56, 15, 0.05) 2px,
+                rgba(15, 56, 15, 0.05) 4px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Pixel art border decoration */
+        .pixel-corner {
+            width: 16px;
+            height: 16px;
+            background: #0f380f;
+            position: absolute;
+        }
+
+        .pixel-corner.tl { top: -4px; left: -4px; }
+        .pixel-corner.tr { top: -4px; right: -4px; }
+        .pixel-corner.bl { bottom: -4px; left: -4px; }
+        .pixel-corner.br { bottom: -4px; right: -4px; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 4px dotted #0f380f;
+        }
+
+        .title {
+            font-size: 16px;
+            color: #0f380f;
+            margin-bottom: 12px;
+            line-height: 1.6;
+            text-shadow: 2px 2px 0 rgba(15, 56, 15, 0.2);
+        }
+
+        .subtitle {
+            font-size: 8px;
+            color: #306230;
+            line-height: 1.8;
+        }
+
+        /* Game-style info boxes */
+        .status-section {
+            background: #8bac0f;
+            border: 4px solid #0f380f;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 8px;
+            line-height: 1.8;
+        }
+
+        .status-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            color: #0f380f;
+        }
+
+        .info-value {
+            color: #0f380f;
+            font-weight: bold;
+        }
+
+        /* Timer display - retro style */
+        .timer-section {
+            text-align: center;
+            margin: 24px 0;
+            padding: 20px;
+            background: #306230;
+            border: 4px solid #0f380f;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timer-section::before {
+            content: '█ █ █ █ █ █ █ █ █';
+            position: absolute;
+            top: 4px;
+            left: 0;
+            right: 0;
+            font-size: 6px;
+            color: #0f380f;
+            opacity: 0.3;
+        }
+
+        .timer-section::after {
+            content: '█ █ █ █ █ █ █ █ █';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            right: 0;
+            font-size: 6px;
+            color: #0f380f;
+            opacity: 0.3;
+        }
+
+        .timer {
+            font-size: 48px;
+            color: #9bbc0f;
+            line-height: 1;
+            margin-bottom: 8px;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 3px 3px 0 rgba(15, 56, 15, 0.4);
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.8; }
+        }
+
+        .timer-label-text {
+            font-size: 8px;
+            color: #8bac0f;
+            line-height: 1.8;
+        }
+
+        /* Pixel button */
+        .redirect-link {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: #306230;
+            color: #9bbc0f;
+            text-decoration: none;
+            text-align: center;
+            border: 4px solid #0f380f;
+            font-size: 10px;
+            cursor: pointer;
+            margin: 16px 0;
+            position: relative;
+            transition: all 0.1s ease;
+            line-height: 1.6;
+        }
+
+        .redirect-link::before {
+            content: '▶';
+            margin-right: 8px;
+        }
+
+        .redirect-link::after {
+            content: '◀';
+            margin-left: 8px;
+        }
+
+        .redirect-link:hover {
+            background: #0f380f;
+            color: #9bbc0f;
+            transform: translate(-2px, -2px);
+            box-shadow: 2px 2px 0 #0f380f;
+        }
+
+        .redirect-link:active {
+            transform: translate(0, 0);
+            box-shadow: none;
+        }
+
+        .url-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 4px dotted #0f380f;
+        }
+
+        .url-label {
+            font-size: 8px;
+            color: #0f380f;
+            margin-bottom: 8px;
+            line-height: 1.8;
+        }
+
+        .url-display {
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: #0f380f;
+            background: #8bac0f;
+            padding: 12px;
+            border: 4px solid #0f380f;
+            line-height: 1.6;
+        }
+
+        /* HP/MP style bars decoration */
+        .hp-bar {
+            height: 4px;
+            background: #0f380f;
+            margin: 8px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hp-bar::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background: #306230;
+            animation: loading 7s linear;
+        }
+
+        @keyframes loading {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        /* =========================
+           DARK THEME
+           ========================= */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #1a1a1a;
+                background-image:
+                    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,.03) 2px, rgba(255,255,255,.03) 4px),
+                    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,.03) 2px, rgba(255,255,255,.03) 4px);
+            }
+
+            .container {
+                background: #1f2d1f;
+                border-color: #4a9d4a;
+                box-shadow:
+                    0 0 0 4px #2d5c2d,
+                    0 0 0 8px #4a9d4a,
+                    8px 8px 0 8px rgba(74, 157, 74, 0.3);
+            }
+
+            .container::before {
+                background: repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(74, 157, 74, 0.05) 2px,
+                    rgba(74, 157, 74, 0.05) 4px
+                );
+            }
+
+            .pixel-corner {
+                background: #4a9d4a;
+            }
+
+            .header {
+                border-bottom-color: #4a9d4a;
+            }
+
+            .title {
+                color: #7fd67f;
+                text-shadow: 2px 2px 0 rgba(74, 157, 74, 0.3);
+            }
+
+            .subtitle {
+                color: #5cb85c;
+            }
+
+            .status-section {
+                background: #2d5c2d;
+                border-color: #4a9d4a;
+            }
+
+            .info-label,
+            .info-value {
+                color: #7fd67f;
+            }
+
+            .timer-section {
+                background: #0f1f0f;
+                border-color: #4a9d4a;
+            }
+
+            .timer-section::before,
+            .timer-section::after {
+                color: #4a9d4a;
+            }
+
+            .timer {
+                color: #7fd67f;
+                text-shadow: 3px 3px 0 rgba(74, 157, 74, 0.4);
+            }
+
+            .timer-label-text {
+                color: #5cb85c;
+            }
+
+            .redirect-link {
+                background: #2d5c2d;
+                color: #7fd67f;
+                border-color: #4a9d4a;
+            }
+
+            .redirect-link:hover {
+                background: #0f1f0f;
+                color: #7fd67f;
+                box-shadow: 2px 2px 0 #4a9d4a;
+            }
+
+            .url-section {
+                border-top-color: #4a9d4a;
+            }
+
+            .url-label {
+                color: #7fd67f;
+            }
+
+            .url-display {
+                color: #7fd67f;
+                background: #2d5c2d;
+                border-color: #4a9d4a;
+            }
+
+            .hp-bar {
+                background: #4a9d4a;
+            }
+
+            .hp-bar::after {
+                background: #2d5c2d;
+            }
+        }
+
+        /* =========================
+           RESPONSIVE DESIGN
+           ========================= */
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px;
+            }
+
+            .title {
+                font-size: 14px;
+            }
+
+            .timer {
+                font-size: 40px;
+            }
+
+            .timer-section {
+                margin: 16px 0;
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            .container {
+                padding: 20px;
+                border-width: 4px;
+            }
+
+            .title {
+                font-size: 12px;
+            }
+
+            .subtitle,
+            .status-row,
+            .timer-label-text,
+            .url-label {
+                font-size: 7px;
+            }
+
+            .timer {
+                font-size: 32px;
+            }
+
+            .redirect-link {
+                font-size: 8px;
+                padding: 12px;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentURL = window.location.href;
+            let redirectTo = decodeURIComponent(currentURL.split('redirect_to=')[1] || '');
+            const language = navigator.language || navigator.userLanguage;
+            const isRussian = language.startsWith('ru');
+
+            // Bilingual text strings
+            const titleText = isRussian ? 'Перенаправление' : 'Redirect Page';
+            const subtitleText = isRussian ? 'Пожалуйста, подождите' : 'Please wait';
+            const buttonText = isRussian ? 'Начать' : 'Start';
+            const statusLabel = isRussian ? 'Статус' : 'Status';
+            const statusValue = isRussian ? 'Загрузка' : 'Loading';
+            const timerLabel = isRussian ? 'Секунд' : 'Seconds';
+            const urlLabel = isRussian ? 'URL назначения' : 'Destination URL';
+
+            // Update UI with localized text
+            document.getElementById('title').innerText = titleText;
+            document.getElementById('subtitle').innerText = subtitleText;
+            document.getElementById('redirectLink').innerText = buttonText;
+            document.getElementById('redirectLink').href = redirectTo;
+            document.getElementById('status-label').innerText = statusLabel;
+            document.getElementById('status-value').innerText = statusValue;
+            document.getElementById('timer-label').innerText = timerLabel;
+            document.getElementById('url-label').innerText = urlLabel;
+            document.getElementById('url-display').innerText = redirectTo || (isRussian ? 'Не указан' : 'Not specified');
+
+            // Countdown timer logic
+            if (redirectTo) {
+                let countdown = 7;
+                const timerElement = document.getElementById('timer');
+
+                timerElement.innerText = countdown;
+
+                const interval = setInterval(() => {
+                    countdown--;
+                    timerElement.innerText = countdown;
+
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        window.location.href = redirectTo;
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('timer').innerText = '—';
+                alert(isRussian ? 'Не указана ссылка для перенаправления.' : 'No redirect link specified.');
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="pixel-corner tl"></div>
+        <div class="pixel-corner tr"></div>
+        <div class="pixel-corner bl"></div>
+        <div class="pixel-corner br"></div>
+
+        <div class="header">
+            <h1 id="title" class="title">Redirect Page</h1>
+            <div id="subtitle" class="subtitle">Please wait</div>
+        </div>
+
+        <div class="status-section">
+            <div class="status-row">
+                <span id="status-label" class="info-label">Status</span>
+                <span id="status-value" class="info-value">Loading</span>
+            </div>
+        </div>
+
+        <div class="hp-bar"></div>
+
+        <div class="timer-section">
+            <div id="timer" class="timer">7</div>
+            <div id="timer-label" class="timer-label-text">Seconds</div>
+        </div>
+
+        <a id="redirectLink" class="redirect-link" href="#" target="_blank">Start</a>
+
+        <div class="url-section">
+            <div id="url-label" class="url-label">Destination URL</div>
+            <div id="url-display" class="url-display"></div>
+        </div>
+    </div>
+</body>
+</html>
