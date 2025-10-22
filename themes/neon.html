@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect - Neon Theme</title>
+    <style>
+        /**
+         * NEON THEME
+         * 
+         * Modern ambient-gradient theme with mesh spots and soft neon glows
+         * Inspired by Warp, Superlist, and Vercel AI design patterns
+         */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* =========================
+           LIGHT THEME (DEFAULT)
+           ========================= */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: 
+                linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%),
+                radial-gradient(600px 400px at 70% 20%, rgba(20, 184, 166, 0.15), transparent),
+                radial-gradient(500px 320px at 20% 80%, rgba(255, 0, 160, 0.12), transparent),
+                radial-gradient(400px 300px at 50% 50%, rgba(139, 92, 246, 0.08), transparent);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a1a1a;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.04),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(300px 200px at 80% 10%, rgba(20, 184, 166, 0.15), transparent),
+                radial-gradient(250px 150px at 20% 90%, rgba(255, 0, 160, 0.12), transparent),
+                radial-gradient(200px 120px at 50% 30%, rgba(139, 92, 246, 0.1), transparent),
+                radial-gradient(180px 100px at 30% 70%, rgba(236, 72, 153, 0.08), transparent);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #14b8a6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 8px rgba(20, 184, 166, 0.3);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 32px;
+            font-weight: 400;
+        }
+
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.08), rgba(139, 92, 246, 0.05));
+            border: 1px solid rgba(20, 184, 166, 0.15);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-row::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .info-row:hover::before {
+            opacity: 1;
+        }
+
+        .info-label {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #14b8a6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .timer {
+            font-size: 36px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #14b8a6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 6px 24px rgba(20, 184, 166, 0.4);
+            text-align: center;
+            margin: 16px 0;
+        }
+
+        .redirect-link {
+            display: block;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #14b8a6, #8b5cf6);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 40px rgba(20, 184, 166, 0.4), 0 0 20px rgba(139, 92, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .redirect-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .redirect-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 48px rgba(20, 184, 166, 0.6), 0 8px 32px rgba(139, 92, 246, 0.5);
+        }
+
+        .redirect-link:hover::before {
+            left: 100%;
+        }
+
+        .url-display {
+            word-break: break-all;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 12px;
+            color: #6b7280;
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.05), rgba(139, 92, 246, 0.03));
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(20, 184, 166, 0.1);
+            margin-top: 16px;
+            position: relative;
+        }
+
+        .url-display::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            border-radius: 8px;
+            opacity: 0.5;
+        }
+
+        /* =========================
+           DARK THEME
+           ========================= */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: 
+                    linear-gradient(180deg, #0b1220 0%, #0b0f19 100%),
+                    radial-gradient(600px 400px at 70% 20%, rgba(0, 255, 200, 0.18), transparent),
+                    radial-gradient(500px 320px at 20% 80%, rgba(255, 0, 160, 0.14), transparent);
+                color: #e0e0e0;
+            }
+
+            .container {
+                background: rgba(15, 18, 28, 0.7);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.3),
+                    0 0 0 1px rgba(255, 255, 255, 0.05);
+            }
+
+            .container::before {
+                background: 
+                    radial-gradient(300px 200px at 80% 10%, rgba(0, 255, 200, 0.15), transparent),
+                    radial-gradient(250px 150px at 20% 90%, rgba(255, 0, 160, 0.12), transparent);
+            }
+
+            .title {
+                background: linear-gradient(135deg, #00ffc8, #14b8a6);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                text-shadow: 0 2px 8px rgba(0, 255, 200, 0.3);
+            }
+
+            .subtitle {
+                color: #a0a0a0;
+            }
+
+            .info-row {
+                background: rgba(0, 255, 200, 0.08);
+                border: 1px solid rgba(0, 255, 200, 0.15);
+            }
+
+            .info-label {
+                color: #a0a0a0;
+            }
+
+            .info-value {
+                color: #00ffc8;
+            }
+
+            .timer {
+                color: #00ffc8;
+                text-shadow: 0 6px 24px rgba(0, 255, 200, 0.4);
+            }
+
+            .redirect-link {
+                background: #00ffc8;
+                color: #0b1220;
+                box-shadow: 0 0 40px rgba(0, 255, 200, 0.4);
+            }
+
+            .redirect-link:hover {
+                box-shadow: 0 8px 48px rgba(0, 255, 200, 0.6);
+            }
+
+            .url-display {
+                color: #a0a0a0;
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+            }
+        }
+
+        /* =========================
+           RESPONSIVE DESIGN
+           ========================= */
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px;
+                margin: 16px;
+            }
+
+            .title {
+                font-size: 24px;
+            }
+
+            .timer {
+                font-size: 32px;
+            }
+
+            .redirect-link {
+                padding: 14px 24px;
+                font-size: 15px;
+            }
+
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .title {
+                font-size: 22px;
+            }
+
+            .timer {
+                font-size: 28px;
+            }
+        }
+
+        /* =========================
+           ANIMATIONS
+           ========================= */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .timer {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { 
+                box-shadow: 0 0 40px rgba(20, 184, 166, 0.35);
+            }
+            50% { 
+                box-shadow: 0 0 60px rgba(20, 184, 166, 0.5);
+            }
+        }
+
+        .redirect-link {
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .redirect-link {
+                animation: glow-dark 3s ease-in-out infinite;
+            }
+        }
+
+        @keyframes glow-dark {
+            0%, 100% { 
+                box-shadow: 0 0 40px rgba(0, 255, 200, 0.4);
+            }
+            50% { 
+                box-shadow: 0 0 60px rgba(0, 255, 200, 0.6);
+            }
+        }
+    </style>
+    <script>
+        /**
+         * REDIRECT LOGIC
+         *
+         * DO NOT MODIFY unless you know what you're doing.
+         * This script handles:
+         * - URL parameter extraction (redirect_to)
+         * - Language detection (Russian/English)
+         * - Countdown timer (7 seconds)
+         * - Automatic redirect
+         */
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentURL = window.location.href;
+            let redirectTo = decodeURIComponent(currentURL.split('redirect_to=')[1] || '');
+            const language = navigator.language || navigator.userLanguage;
+            const isRussian = language.startsWith('ru');
+
+            // Bilingual text strings
+            const titleText = isRussian ? 'Перенаправление' : 'Redirect Page';
+            const subtitleText = isRussian ? 'Пожалуйста, подождите' : 'Please wait';
+            const buttonText = isRussian ? 'Перейти' : 'Continue';
+            const statusLabel = isRussian ? 'Статус' : 'Status';
+            const statusValue = isRussian ? 'Перенаправление' : 'Redirecting';
+            const timerLabel = isRussian ? 'Осталось' : 'Time remaining';
+            const urlLabel = isRussian ? 'URL назначения' : 'Destination URL';
+
+            // Update UI with localized text
+            document.getElementById('title').innerText = titleText;
+            document.getElementById('subtitle').innerText = subtitleText;
+            document.getElementById('redirectLink').innerText = buttonText;
+            document.getElementById('redirectLink').href = redirectTo;
+            document.getElementById('status-label').innerText = statusLabel;
+            document.getElementById('status-value').innerText = statusValue;
+            document.getElementById('timer-label').innerText = timerLabel;
+            document.getElementById('url-label').innerText = urlLabel;
+            document.getElementById('url-display').innerText = redirectTo || (isRussian ? 'Не указан' : 'Not specified');
+
+            // Countdown timer logic
+            if (redirectTo) {
+                let countdown = 7;
+                const timerElement = document.getElementById('timer');
+
+                timerElement.innerText = countdown;
+
+                const interval = setInterval(() => {
+                    countdown--;
+                    timerElement.innerText = countdown;
+
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        window.location.href = redirectTo;
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('timer').innerText = '—';
+                alert(isRussian ? 'Не указана ссылка для перенаправления.' : 'No redirect link specified.');
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title" class="title">Redirect Page</h1>
+        <div id="subtitle" class="subtitle">Please wait</div>
+
+        <div class="info-section">
+            <div class="info-row">
+                <span id="status-label" class="info-label">Status</span>
+                <span id="status-value" class="info-value">Redirecting</span>
+            </div>
+            <div class="info-row">
+                <span id="timer-label" class="info-label">Time remaining</span>
+                <span id="timer" class="info-value timer">7</span>
+            </div>
+        </div>
+
+        <a id="redirectLink" class="redirect-link" href="#" target="_blank">Continue</a>
+
+        <div id="url-label" class="info-label" style="margin-top: 24px; margin-bottom: 8px;">Destination URL</div>
+        <div id="url-display" class="url-display"></div>
+    </div>
+</body>
+</html>
