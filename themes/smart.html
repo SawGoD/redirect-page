@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect - Smart</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* =========================
+           LIGHT THEME (DEFAULT)
+           ========================= */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow:
+                0 8px 32px rgba(33, 150, 243, 0.12),
+                0 2px 8px rgba(33, 150, 243, 0.08);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2196F3, #64B5F6, #2196F3);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .container:hover {
+            box-shadow:
+                0 12px 48px rgba(33, 150, 243, 0.18),
+                0 4px 12px rgba(33, 150, 243, 0.12);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1565C0;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #1565C0, #2196F3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #546E7A;
+            font-weight: 400;
+        }
+
+        .status-section {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.08), rgba(33, 150, 243, 0.04));
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(33, 150, 243, 0.12);
+            transition: all 0.3s ease;
+        }
+
+        .status-section:hover {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.12), rgba(33, 150, 243, 0.06));
+            border-color: rgba(33, 150, 243, 0.2);
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-label {
+            font-size: 13px;
+            color: #546E7A;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1565C0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-value::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #2196F3;
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.7);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.2);
+                box-shadow: 0 0 0 4px rgba(33, 150, 243, 0);
+            }
+        }
+
+        /* Circular timer with progress ring */
+        .timer-section {
+            text-align: center;
+            margin: 40px 0;
+            padding: 20px;
+        }
+
+        .timer-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+        }
+
+        .timer-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+        }
+
+        .timer-circle svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .timer-circle-bg {
+            fill: none;
+            stroke: rgba(33, 150, 243, 0.1);
+            stroke-width: 8;
+        }
+
+        .timer-circle-progress {
+            fill: none;
+            stroke: url(#gradient);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 565.48;
+            stroke-dashoffset: 0;
+            animation: countdown 7s linear forwards;
+        }
+
+        @keyframes countdown {
+            from { stroke-dashoffset: 0; }
+            to { stroke-dashoffset: 565.48; }
+        }
+
+        .timer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 72px;
+            font-weight: 700;
+            color: #2196F3;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+            animation: timer-pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes timer-pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(0.95);
+                opacity: 0.9;
+            }
+        }
+
+        .timer-label-text {
+            font-size: 14px;
+            color: #546E7A;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Loading dots indicator */
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 24px 0;
+            height: 32px;
+        }
+
+        .loading-dot {
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, #2196F3, #64B5F6);
+            border-radius: 50%;
+            animation: dot-pulse 1.4s ease-in-out infinite;
+            box-shadow: 0 0 8px rgba(33, 150, 243, 0.4);
+        }
+
+        .loading-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .loading-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .loading-dot:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+        .loading-dot:nth-child(5) {
+            animation-delay: 0.8s;
+        }
+
+        @keyframes dot-pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+        }
+
+        .redirect-link {
+            display: block;
+            width: 100%;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: #ffffff;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin: 24px 0;
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .redirect-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .redirect-link:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .redirect-link:hover {
+            background: linear-gradient(135deg, #1E88E5, #1565C0);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        }
+
+        .redirect-link:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+        }
+
+        .redirect-link span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .url-section {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(33, 150, 243, 0.12);
+        }
+
+        .url-label {
+            font-size: 12px;
+            color: #546E7A;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .url-display {
+            word-break: break-all;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+            color: #1565C0;
+            background: rgba(33, 150, 243, 0.05);
+            padding: 16px 20px;
+            border-radius: 12px;
+            line-height: 1.6;
+            border: 1px solid rgba(33, 150, 243, 0.12);
+        }
+
+        /* =========================
+           DARK THEME
+           ========================= */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+            }
+
+            .container {
+                background: rgba(30, 41, 59, 0.95);
+                box-shadow:
+                    0 8px 32px rgba(33, 150, 243, 0.2),
+                    0 2px 8px rgba(33, 150, 243, 0.1);
+            }
+
+            .container:hover {
+                box-shadow:
+                    0 12px 48px rgba(33, 150, 243, 0.25),
+                    0 4px 12px rgba(33, 150, 243, 0.15);
+            }
+
+            .title {
+                color: #64B5F6;
+                background: linear-gradient(135deg, #64B5F6, #90CAF9);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .subtitle {
+                color: #94a3b8;
+            }
+
+            .status-section {
+                background: linear-gradient(135deg, rgba(33, 150, 243, 0.15), rgba(33, 150, 243, 0.08));
+                border-color: rgba(33, 150, 243, 0.2);
+            }
+
+            .status-section:hover {
+                background: linear-gradient(135deg, rgba(33, 150, 243, 0.2), rgba(33, 150, 243, 0.12));
+                border-color: rgba(33, 150, 243, 0.3);
+            }
+
+            .info-label {
+                color: #94a3b8;
+            }
+
+            .info-value {
+                color: #64B5F6;
+            }
+
+            .info-value::before {
+                background: #64B5F6;
+                box-shadow: 0 0 0 0 rgba(100, 181, 246, 0.7);
+            }
+
+            .timer-circle-bg {
+                stroke: rgba(100, 181, 246, 0.15);
+            }
+
+            .timer {
+                color: #64B5F6;
+            }
+
+            .timer-label-text {
+                color: #94a3b8;
+            }
+
+            .loading-dot {
+                background: linear-gradient(135deg, #64B5F6, #90CAF9);
+                box-shadow: 0 0 8px rgba(100, 181, 246, 0.4);
+            }
+
+            .redirect-link {
+                background: linear-gradient(135deg, #1976D2, #1565C0);
+                box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+            }
+
+            .redirect-link:hover {
+                background: linear-gradient(135deg, #2196F3, #1976D2);
+                box-shadow: 0 6px 20px rgba(33, 150, 243, 0.5);
+            }
+
+            .url-section {
+                border-top-color: rgba(100, 181, 246, 0.2);
+            }
+
+            .url-label {
+                color: #94a3b8;
+            }
+
+            .url-display {
+                color: #64B5F6;
+                background: rgba(100, 181, 246, 0.08);
+                border-color: rgba(100, 181, 246, 0.2);
+            }
+        }
+
+        /* =========================
+           RESPONSIVE DESIGN
+           ========================= */
+        @media (max-width: 768px) {
+            .container {
+                padding: 32px 24px;
+                border-radius: 20px;
+            }
+
+            .title {
+                font-size: 28px;
+            }
+
+            .timer-container {
+                width: 160px;
+                height: 160px;
+            }
+
+            .timer {
+                font-size: 56px;
+            }
+
+            .timer-section {
+                margin: 32px 0;
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            .container {
+                padding: 24px 20px;
+                border-radius: 16px;
+            }
+
+            .title {
+                font-size: 24px;
+            }
+
+            .timer-container {
+                width: 140px;
+                height: 140px;
+            }
+
+            .timer {
+                font-size: 48px;
+            }
+
+            .redirect-link {
+                padding: 14px 24px;
+                font-size: 15px;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentURL = window.location.href;
+            let redirectTo = decodeURIComponent(currentURL.split('redirect_to=')[1] || '');
+            const language = navigator.language || navigator.userLanguage;
+            const isRussian = language.startsWith('ru');
+
+            // Bilingual text strings
+            const titleText = isRussian ? 'Перенаправление' : 'Redirect Page';
+            const subtitleText = isRussian ? 'Пожалуйста, подождите' : 'Please wait';
+            const buttonText = isRussian ? 'Перейти сейчас' : 'Go Now';
+            const statusLabel = isRussian ? 'Статус' : 'Status';
+            const statusValue = isRussian ? 'Перенаправление' : 'Redirecting';
+            const timerLabel = isRussian ? 'секунд' : 'seconds';
+            const urlLabel = isRussian ? 'URL назначения' : 'Destination URL';
+
+            // Update UI with localized text
+            document.getElementById('title').innerText = titleText;
+            document.getElementById('subtitle').innerText = subtitleText;
+            document.getElementById('redirectLink').innerHTML = '<span>' + buttonText + '</span>';
+            document.getElementById('redirectLink').href = redirectTo;
+            document.getElementById('status-label').innerText = statusLabel;
+            document.getElementById('status-value').innerText = statusValue;
+            document.getElementById('timer-label').innerText = timerLabel;
+            document.getElementById('url-label').innerText = urlLabel;
+            document.getElementById('url-display').innerText = redirectTo || (isRussian ? 'Не указан' : 'Not specified');
+
+            // Countdown timer logic
+            if (redirectTo) {
+                let countdown = 7;
+                const timerElement = document.getElementById('timer');
+
+                timerElement.innerText = countdown;
+
+                const interval = setInterval(() => {
+                    countdown--;
+                    timerElement.innerText = countdown;
+
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        window.location.href = redirectTo;
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('timer').innerText = '—';
+                alert(isRussian ? 'Не указана ссылка для перенаправления.' : 'No redirect link specified.');
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="title" class="title">Redirect Page</h1>
+            <div id="subtitle" class="subtitle">Please wait</div>
+        </div>
+
+        <div class="status-section">
+            <div class="status-row">
+                <span id="status-label" class="info-label">Status</span>
+                <span id="status-value" class="info-value">Redirecting</span>
+            </div>
+        </div>
+
+        <div class="timer-section">
+            <div class="timer-container">
+                <div class="timer-circle">
+                    <svg>
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#2196F3;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#64B5F6;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle class="timer-circle-bg" cx="100" cy="100" r="90"></circle>
+                        <circle class="timer-circle-progress" cx="100" cy="100" r="90"></circle>
+                    </svg>
+                </div>
+                <div id="timer" class="timer">7</div>
+            </div>
+            <div id="timer-label" class="timer-label-text">Seconds</div>
+        </div>
+
+        <div class="loading-dots">
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+        </div>
+
+        <a id="redirectLink" class="redirect-link" href="#" target="_blank"><span>Continue</span></a>
+
+        <div class="url-section">
+            <div id="url-label" class="url-label">Destination URL</div>
+            <div id="url-display" class="url-display"></div>
+        </div>
+    </div>
+</body>
+</html>

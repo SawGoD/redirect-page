@@ -38,11 +38,12 @@ https://sawgod.github.io/redirect-page/?theme=THEME_NAME&redirect_to=YOUR_URL
 
 **Доступные темы:**
 - `telegram` - Стандартная тема (используется по умолчанию)
+- `retro` - Ретро-стиль с анимациями
+- `pixel` - Пиксельная игровая тема в стиле 8-bit
+- `smart` - Современная тема с синим дизайном и анимациями
 - `soft` - Мягкая розово-фиолетовая тема с карточками
 - `simple` - Простая монохромная тема
 - `minimal` - Минималистичная тема
-- `retro` - Ретро-стиль с анимациями
-- `pixel` - Пиксельная игровая тема в стиле 8-bit
 - `apple` - Стиль Apple
 - `google` - Стиль Google Material Design
 - `microsoft` - Стиль Microsoft Fluent Design
@@ -50,26 +51,20 @@ https://sawgod.github.io/redirect-page/?theme=THEME_NAME&redirect_to=YOUR_URL
 **Примеры:**
 
 ```
-# Автоопределение темы по ОС (рекомендуется)
-https://sawgod.github.io/redirect-page/?system&redirect_to=YOUR_URL
-
 # Стандартная тема (Telegram) - тему указывать не нужно
 https://sawgod.github.io/redirect-page/?redirect_to=YOUR_URL
+
+# Автоопределение темы по ОС (рекомендуется)
+https://sawgod.github.io/redirect-page/?system&redirect_to=YOUR_URL
 
 # Тема Microsoft (ручной выбор)
 https://sawgod.github.io/redirect-page/?theme=microsoft&redirect_to=YOUR_URL
 
-# Тема Apple (ручной выбор)
-https://sawgod.github.io/redirect-page/?theme=apple&redirect_to=YOUR_URL
-
-# Тема Soft
-https://sawgod.github.io/redirect-page/?theme=soft&redirect_to=YOUR_URL
-
 # Ретро тема
 https://sawgod.github.io/redirect-page/?theme=retro&redirect_to=YOUR_URL
 
-# Пиксельная игровая тема
-https://sawgod.github.io/redirect-page/?theme=pixel&redirect_to=YOUR_URL
+# Современная тема Smart
+https://sawgod.github.io/redirect-page/?theme=smart&redirect_to=YOUR_URL
 ```
 
 > **Примечание:** Параметр `?theme` имеет приоритет над `?system`. Если указаны оба, будет использована тема из `?theme`.
@@ -109,6 +104,14 @@ https://sawgod.github.io/redirect-page/?theme=pixel&redirect_to=YOUR_URL
   Светлая тема             |  Темная тема
 :-------------------------:|:-------------------------:
 ![](img/pixel_light.png)  |  ![](img/pixel_dark.png)
+</details>
+
+<details>
+  <summary>Smart</summary>
+
+  Светлая тема             |  Темная тема
+:-------------------------:|:-------------------------:
+![](img/smart_light.png)  |  ![](img/smart_dark.png)
 </details>
 
 <details>
