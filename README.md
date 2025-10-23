@@ -159,7 +159,7 @@ https://sawgod.github.io/redirect-page/?theme=smart&redirect_to=YOUR_URL
 </details>
 
 <details>
-  <summary>Простая</summary>
+  <summary>Simple</summary>
   
   Светлая тема             |  Темная тема
 :-------------------------:|:-------------------------:
@@ -167,7 +167,7 @@ https://sawgod.github.io/redirect-page/?theme=smart&redirect_to=YOUR_URL
 </details>
 
 <details>
-  <summary>Минималистичная</summary>
+  <summary>Minimal</summary>
   
   Светлая тема             |  Темная тема
 :-------------------------:|:-------------------------:
@@ -175,7 +175,7 @@ https://sawgod.github.io/redirect-page/?theme=smart&redirect_to=YOUR_URL
 </details>
 
 <details>
-  <summary>Системные (Apple, Google, Microsoft)</summary>
+  <summary>System (Apple, Google, Microsoft)</summary>
 
   Светлая тема             |  Темная тема
 :-------------------------:|:-------------------------:
