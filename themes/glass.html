@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect - Glass</title>
+    <style>
+        /**
+         * GLASS THEME
+         *
+         * A glassmorphism theme with cold color palette (blue to violet gradients)
+         * Features: backdrop-filter blur, mesh gradient background, smooth animations
+         */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* =========================
+           CSS TOKENS (CUSTOM PROPERTIES)
+           ========================= */
+        :root {
+            /* Colors - Light Theme (Cold Palette) */
+            --glass-fg: rgba(20, 30, 60, 0.95);
+            --glass-bg: rgba(255, 255, 255, 0.12);
+            --accent: #4c6fff;
+            --accent-2: #7c3aed;
+            --neutral-1: rgba(20, 30, 60, 0.08);
+            --neutral-2: rgba(20, 30, 60, 0.15);
+            --neutral-3: rgba(20, 30, 60, 0.25);
+            --neutral-4: rgba(20, 30, 60, 0.40);
+
+            /* Background mesh gradient */
+            --bg-gradient-1: #e0f2ff;
+            --bg-gradient-2: #ddd6fe;
+            --bg-gradient-3: #e0e7ff;
+            --bg-gradient-4: #f0f9ff;
+
+            /* Glass Effects */
+            --blur: 14px;
+            --corner: 20px;
+            --border-color: rgba(255, 255, 255, 0.2);
+            --border-width: 1px;
+
+            /* Elevation & Shadows */
+            --shadow-sm: 0 1px 2px rgba(20, 30, 60, 0.05);
+            --shadow-md: 0 4px 12px rgba(20, 30, 60, 0.08);
+            --shadow-lg: 0 12px 32px rgba(20, 30, 60, 0.12);
+            --shadow-glow: 0 0 24px rgba(76, 111, 255, 0);
+            --shadow-inner: inset 0 1px 2px rgba(255, 255, 255, 0.5);
+
+            /* Specular Highlights */
+            --spec-light: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 50%);
+
+            /* Typography */
+            --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-mono: "SF Mono", "Monaco", "Consolas", "Liberation Mono", monospace;
+        }
+
+        /* Dark Theme */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --glass-fg: rgba(240, 245, 255, 0.95);
+                --glass-bg: rgba(30, 30, 45, 0.15);
+                --accent: #6b8aff;
+                --accent-2: #9b6dff;
+                --neutral-1: rgba(240, 245, 255, 0.06);
+                --neutral-2: rgba(240, 245, 255, 0.12);
+                --neutral-3: rgba(240, 245, 255, 0.20);
+                --neutral-4: rgba(240, 245, 255, 0.35);
+
+                --bg-gradient-1: #0f172a;
+                --bg-gradient-2: #1e1b4b;
+                --bg-gradient-3: #1e3a8a;
+                --bg-gradient-4: #172554;
+
+                --border-color: rgba(255, 255, 255, 0.15);
+                --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+                --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+                --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.4);
+                --shadow-inner: inset 0 1px 2px rgba(255, 255, 255, 0.1);
+                --spec-light: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+            }
+        }
+
+        /* =========================
+           ANIMATED MESH GRADIENT BACKGROUND
+           ========================= */
+        body {
+            font-family: var(--font-body);
+            color: var(--glass-fg);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 20% 30%, var(--bg-gradient-1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, var(--bg-gradient-2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, var(--bg-gradient-3) 0%, transparent 50%),
+                radial-gradient(circle at 90% 70%, var(--bg-gradient-4) 0%, transparent 50%),
+                linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-3) 100%);
+            background-size: 200% 200%;
+            animation: mesh-flow 70s ease infinite;
+        }
+
+        @keyframes mesh-flow {
+            0%, 100% { background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%, 0% 0%; }
+            25% { background-position: 40% 20%, 80% 30%, 20% 80%, 90% 60%, 20% 20%; }
+            50% { background-position: 80% 50%, 60% 70%, 50% 60%, 70% 40%, 50% 50%; }
+            75% { background-position: 30% 80%, 20% 60%, 70% 30%, 40% 90%, 80% 80%; }
+        }
+
+        /* =========================
+           GLASS CARD CONTAINER
+           ========================= */
+        .container {
+            position: relative;
+            max-width: 640px;
+            width: 100%;
+            padding: 112px 56px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            border-radius: var(--corner);
+            border: var(--border-width) solid var(--border-color);
+            box-shadow: var(--shadow-lg), var(--shadow-inner);
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: var(--spec-light);
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        /* =========================
+           TYPOGRAPHY
+           ========================= */
+        .title {
+            font-size: 56px;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.75;
+            opacity: 0.7;
+            margin-bottom: 64px;
+        }
+
+        /* =========================
+           TIMER & STATUS
+           ========================= */
+        .timer-section {
+            margin-bottom: 48px;
+        }
+
+        .timer-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 48px;
+            background: var(--neutral-1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 16px;
+            border: var(--border-width) solid var(--border-color);
+            box-shadow: var(--shadow-md), var(--shadow-inner);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timer-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: var(--spec-light);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .timer {
+            font-size: 64px;
+            font-weight: 300;
+            font-variant-numeric: tabular-nums;
+            color: var(--glass-fg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .info-label {
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.6;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            background: var(--neutral-1);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 12px;
+            border: var(--border-width) solid var(--border-color);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* =========================
+           BUTTONS
+           ========================= */
+        .button-group {
+            margin: 48px 0;
+        }
+
+        /* Ghost Glass Button */
+        .redirect-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--glass-fg);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 14px;
+            border: var(--border-width) solid var(--border-color);
+            box-shadow: var(--shadow-md), var(--shadow-inner), var(--shadow-glow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 52px;
+        }
+
+        .redirect-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: var(--spec-light);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .redirect-link:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                var(--shadow-lg),
+                var(--shadow-inner),
+                0 0 32px rgba(76, 111, 255, 0.3);
+            border-color: rgba(76, 111, 255, 0.4);
+        }
+
+        .redirect-link:hover::before {
+            opacity: 0.6;
+        }
+
+        .redirect-link:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow:
+                var(--shadow-md),
+                inset 0 2px 8px rgba(20, 30, 60, 0.15);
+        }
+
+        /* =========================
+           URL DISPLAY
+           ========================= */
+        .url-section {
+            margin-top: 48px;
+        }
+
+        .url-label {
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.6;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .url-display {
+            padding: 20px 24px;
+            background: var(--neutral-1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 12px;
+            border: var(--border-width) solid var(--border-color);
+            box-shadow: var(--shadow-sm), var(--shadow-inner);
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.6;
+            word-break: break-all;
+            color: var(--glass-fg);
+            opacity: 0.8;
+        }
+
+        /* =========================
+           FOCUS STATES (Accessibility)
+           ========================= */
+        .redirect-link:focus-visible {
+            outline: none;
+            box-shadow:
+                var(--shadow-lg),
+                0 0 0 3px rgba(76, 111, 255, 0.5);
+        }
+
+        /* =========================
+           RESPONSIVE DESIGN
+           ========================= */
+        @media (max-width: 768px) {
+            :root {
+                --blur: 10px;
+            }
+
+            body {
+                padding: 16px;
+                background-size: 300% 300%;
+            }
+
+            .container {
+                padding: 56px 28px;
+                border-radius: 16px;
+            }
+
+            .title {
+                font-size: 40px;
+            }
+
+            .subtitle {
+                font-size: 15px;
+                margin-bottom: 40px;
+            }
+
+            .timer-wrapper {
+                padding: 24px 32px;
+            }
+
+            .timer {
+                font-size: 48px;
+            }
+
+            .redirect-link {
+                width: 100%;
+                padding: 16px 32px;
+            }
+
+            .url-display {
+                font-size: 12px;
+                padding: 16px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .title {
+                font-size: 32px;
+            }
+
+            .timer {
+                font-size: 40px;
+            }
+        }
+
+        /* =========================
+           REDUCED MOTION
+           ========================= */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            body {
+                animation: none;
+                background-size: 100% 100%;
+            }
+
+            .redirect-link:hover {
+                transform: none;
+            }
+
+            .redirect-link:active {
+                transform: scale(0.98);
+            }
+        }
+    </style>
+    <script>
+        /**
+         * REDIRECT LOGIC
+         * Handles URL parameters, language detection, countdown timer, and redirect
+         */
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentURL = window.location.href;
+            let redirectTo = decodeURIComponent(currentURL.split('redirect_to=')[1] || '');
+            const language = navigator.language || navigator.userLanguage;
+            const isRussian = language.startsWith('ru');
+
+            // Bilingual text strings
+            const titleText = isRussian ? 'Перенаправление' : 'Redirect Page';
+            const subtitleText = isRussian ? 'Пожалуйста, подождите немного' : 'Please wait a moment';
+            const buttonText = isRussian ? 'Перейти сейчас' : 'Continue Now';
+            const statusLabel = isRussian ? 'Статус' : 'Status';
+            const statusValue = isRussian ? 'Перенаправление' : 'Redirecting';
+            const timerLabel = isRussian ? 'Осталось секунд' : 'Seconds remaining';
+            const urlLabel = isRussian ? 'URL назначения' : 'Destination URL';
+
+            // Update UI with localized text
+            document.getElementById('title').innerText = titleText;
+            document.getElementById('subtitle').innerText = subtitleText;
+            document.getElementById('redirectLink').innerText = buttonText;
+            document.getElementById('redirectLink').href = redirectTo;
+            document.getElementById('status-label').innerText = statusLabel;
+            document.getElementById('status-value').innerText = statusValue;
+            document.getElementById('timer-label').innerText = timerLabel;
+            document.getElementById('url-label').innerText = urlLabel;
+            document.getElementById('url-display').innerText = redirectTo || (isRussian ? 'Не указан' : 'Not specified');
+
+            // Countdown timer logic
+            if (redirectTo) {
+                let countdown = 7;
+                const timerElement = document.getElementById('timer');
+
+                timerElement.innerText = countdown;
+
+                const interval = setInterval(() => {
+                    countdown--;
+                    timerElement.innerText = countdown;
+
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        window.location.href = redirectTo;
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('timer').innerText = '—';
+                alert(isRussian ? 'Не указана ссылка для перенаправления.' : 'No redirect link specified.');
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title" class="title">Redirect Page</h1>
+        <div id="subtitle" class="subtitle">Please wait a moment</div>
+
+        <!-- Timer Section -->
+        <div class="timer-section">
+            <div class="info-row">
+                <span id="status-label" class="info-label">Status</span>
+                <span class="status-pill">
+                    <span id="status-value" class="info-value">Redirecting</span>
+                </span>
+            </div>
+
+            <div class="info-row">
+                <span id="timer-label" class="info-label">Seconds remaining</span>
+            </div>
+
+            <div class="timer-wrapper">
+                <span id="timer" class="timer">7</span>
+            </div>
+        </div>
+
+        <!-- Button Section -->
+        <div class="button-group">
+            <a id="redirectLink" class="redirect-link" href="#" target="_blank">Continue Now</a>
+        </div>
+
+        <!-- URL Display Section -->
+        <div class="url-section">
+            <label id="url-label" class="url-label">Destination URL</label>
+            <div id="url-display" class="url-display"></div>
+        </div>
+    </div>
+</body>
+</html>

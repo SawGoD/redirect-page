@@ -41,6 +41,7 @@ https://sawgod.github.io/redirect-page/?theme=THEME_NAME&redirect_to=YOUR_URL
 - `retro` - Ретро-стиль с анимациями
 - `pixel` - Пиксельная игровая тема в стиле 8-bit
 - `smart` - Современная тема с синим дизайном и анимациями
+- `glass` - Стеклянная тема с холодным градиентом, вдохновлённая glassmorphism
 - `neon` - Неоновая тема с изящным градиентом
 - `aurora` - Северное сияние с мягкими анимациями
 - `soft` - Мягкая розово-фиолетовая тема с карточками
@@ -115,6 +116,14 @@ https://sawgod.github.io/redirect-page/?theme=smart&redirect_to=YOUR_URL
   Светлая тема             |  Темная тема
 :-------------------------:|:-------------------------:
 ![](img/smart_light.png)  |  ![](img/smart_dark.png)
+</details>
+
+<details>
+  <summary>Glass</summary>
+
+  Светлая тема             |  Темная тема
+:-------------------------:|:-------------------------:
+![](img/glass_light.png)  |  ![](img/glass_dark.png)
 </details>
 
 <details>
