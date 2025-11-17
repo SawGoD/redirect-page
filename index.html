@@ -7,8 +7,22 @@
     <script>
         // Theme router - redirects to the appropriate theme based on URL parameter
         (function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const redirectTo = urlParams.get('redirect_to');
+            // Ручной парсинг redirect_to для корректной обработки вложенных URL с параметрами
+            const search = window.location.search;
+            let redirectTo = null;
+            
+            // Находим позицию redirect_to в строке запроса (может быть с ? или &)
+            const redirectToMatch = search.match(/[&?]redirect_to=/);
+            if (redirectToMatch) {
+                // Берём всё после redirect_to= до конца строки (т.к. он всегда последний)
+                const redirectToStart = redirectToMatch.index + redirectToMatch[0].length;
+                const redirectToValue = search.substring(redirectToStart);
+                redirectTo = decodeURIComponent(redirectToValue);
+            }
+            
+            // Удаляем redirect_to из строки для парсинга остальных параметров (theme, system)
+            const searchWithoutRedirect = search.replace(/[&?]redirect_to=.*$/, '');
+            const urlParams = new URLSearchParams(searchWithoutRedirect);
 
             /**
              * Detect operating system based on user agent and platform
